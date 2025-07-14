@@ -110,7 +110,7 @@ form button{
 }
 
 button:hover{
-    box-shadow: 0 0 5px rgb(44, 3, 3);
+    box-shadow: 0 0 3px rgb(44, 3, 3);
 }
 
 h2{
@@ -120,4 +120,24 @@ h2{
     font-size: 2rem;
     
 
+}
+
+.msg{
+    
+    font-size: 1.2rem;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;    color: rgb(47, 3, 69);
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border-radius: 0.5rem;
+    text-decoration: underline;
+    font-weight: 100rem;
+    color: rgb(5, 34, 89);
+
+}
+
+
+button {
+    margin-right: 1.5rem;
 }

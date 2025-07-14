@@ -6,6 +6,7 @@ const fromCurr = document.querySelector(".from select");
 const toCurr = document.querySelector(".to select");
 const msg = document.querySelector(".msg");
 let amount = document.querySelector(".amount input");
+ let finalAmt = 0;
 
 for (let select of dropdowns) {
   for (currCode in countryList) {
@@ -34,23 +35,37 @@ const updateFlag = (element) => {
 
 btn.addEventListener("click", async (evt) => {
   evt.preventDefault();
+  let amount = document.querySelector(".amount input");
+  
 
-  let amtVal = amount.value.trim();
+  let amtVal = amount.value;
+  let amtVal2 = toCurr.value
+  console.log(amtVal);
+  if (amtVal === "" || amtVal < 0) {
+    amtVal = 0;
+    amount.value = "Invalid!";
+    msg.innerText = "Error";
 
-  if (amtVal === "" || !/^[0-9]+(\.[0-9]+)?$/.test(amtVal) || parseFloat(amtVal) < 0) {
-    msg.innerText = " Error! Please enter only valid numeric values.";
-    return;
   }
 
-  let v1 = fromCurr.value;
-  let v2 = toCurr.value;
+    //console.log(fromCurr.value,toCurr.value)
+    let v1 = fromCurr.value;
+    let v2 = toCurr.value;
+    console.log(v1, v2);
+    const URL = `${BASE_URL}${v1}&to=${v2}`;
+    let response = await fetch(URL);
+    let data = await response.json();
+    let rate = data.rates[v2];
+    console.log(rate);
+    console.log(amount.value);
+    
+        let finalAmt = amount.value * rate;
 
-  const URL = `${BASE_URL}${v1}&to=${v2}`;
-  let response = await fetch(URL);
-  let data = await response.json();
-  let rate = data.rates[v2];
+        msg.innerText = `${amtVal} ${v1} = ${finalAmt} ${v2}`;
+    
+})
 
-  let finalAmt = (parseFloat(amtVal) * rate).toFixed(2);
 
-  msg.innerText = `${amtVal} ${v1} = ${finalAmt} ${v2}`;
-});
+// let fromCurr = "usd";
+// let toCurr = "inr"
+//https://api.frankfurter.app/latest?amount=1&from=USD&to=INR
